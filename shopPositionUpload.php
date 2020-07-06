@@ -1,5 +1,6 @@
 <?php
 	include (dirname(__FILE__).'/private_version/connect.php');
+	include (dirname(__FILE__).'/functions.php');
 	$coordinatesVec = json_decode(@file_get_contents("php://input"));
 	if (count($coordinatesVec) == 0) echo 1;
 	else {

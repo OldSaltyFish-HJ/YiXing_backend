@@ -12,13 +12,4 @@
 		mysql_select_db($dbname,$con);
 	}
 	$con = connect();
-	
-	function executeSQL_ns($sql) {
-		if (mysql_query($sql)) {
-			//echo 1;
-		} else {
-			echo mysql_error();die();
-		}
-	}
-
 ?>

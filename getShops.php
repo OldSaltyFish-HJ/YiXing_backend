@@ -1,5 +1,6 @@
 <?php
 	include (dirname(__FILE__).'/private_version/connect.php');
+	include (dirname(__FILE__).'/functions.php');
 	$searchContent = "%";
 	$searchContent .= $_GET['searchContent'];
 	$searchContent .= "%";
