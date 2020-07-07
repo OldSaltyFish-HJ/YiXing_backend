@@ -68,18 +68,28 @@
 			}
 		}
 		else {
+			$map = new HashTable(50);
 			$queue = new SplQueue();
 			$queue->enqueue($prePolygonId);
+			$map->insert($prePolygonId, 1);
 			while (!$queue->isEmpty()) {
 				$front = $queue->top();
-				$queue->pop();
-				$sql = "select minPointId from edges where maxPointId = '$front'";
+				//echo $front;
+				$queue->dequeue();
+				$sql = "select minPointId as polygonId from edges where maxPointId = '$front'";
 				$sql .= " union";
-				$sql .= " select maxPointId from edges where minPointId = '$front'";
+				$sql .= " select maxPointId as polygonId from edges where minPointId = '$front'";
 				$result = executeSQL($sql);
 				while ($rows = mysql_fetch_array($result, MYSQL_ASSOC)) {
-					$queue->enqueue($rows['polygonId']);
-					$polygonId = intval($rows['polygonId']);
+					//echo json_encode($rows);
+					$polygonId = $rows['polygonId'];
+					if ($map->find($polygonId) == 1) {
+						
+					} else {
+						//echo "//".$polygonId."//";
+						$queue->enqueue($polygonId);
+						$map->insert($prePolygonId, 1);
+					}
 					if (isInThePolygon($latitude, $longitude, $polygonId))
 						return $polygonId;
 				}
