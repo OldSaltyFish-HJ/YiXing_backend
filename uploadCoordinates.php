@@ -2,8 +2,8 @@
 	include (dirname(__FILE__).'/private_version/connect.php');
 	include (dirname(__FILE__).'/functions.php');
 	$coordinatesVec = json_decode(@file_get_contents("php://input"));
-	if (count($coordinatesVec) == 0) echo 1;
-	else {
+	if (count($coordinatesVec) == 0) {
+	} else {
 		$sql = "select MAX(polygonId) as max from polygons";
 		$result = mysql_fetch_array(mysql_query($sql), MYSQL_ASSOC);
 		if (count($result) == 0) $maxPolygonId = 1;
@@ -24,6 +24,6 @@
 			//echo $sql."<br />";
 			executeSQL_ns($sql);
 		}
-		echo 1;
+		echo $maxPolygonId;
 	}
 ?>

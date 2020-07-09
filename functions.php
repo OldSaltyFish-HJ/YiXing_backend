@@ -1,24 +1,29 @@
 <?php
 	class HashTable {
 		private $arr; //用于存储数据的数组
-		private $size; //记录arr 数组的大小
-		public function __construct($size) {
-			$this->size = $size;
-			$this->arr = new SplFixedArray($this->size);
+		private $length; //记录arr 数组的大小
+		private $size; //记录存储数据的数量
+		public function __construct($length) {
+			$this->size = 0;
+			$this->length = $length;
+			$this->arr = new SplFixedArray($this->length);
 		}
 		private function hashfunc($key) {
-			return $key % $this->size;
+			return $key % $this->length;
 		}
 		public function insert($key, $value) {
 			$index = $this->hashfunc($key);
 			if (isset($this->arr[$index])) {
 				$newNode = new HashNode($key, $value, $this->arr[$index]);
 			} else {
+				$this->size = $this->size + 1;
 				$newNode = new HashNode($key, $value, null);
 			}
 			$this->arr[$index] = $newNode;
 		}
-
+		public function size() {
+			return $this->size;
+		}
 		public function find($key) {
 			$index = $this->hashfunc($key);
 			$current = $this->arr[$index];
